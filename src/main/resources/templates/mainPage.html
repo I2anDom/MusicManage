@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<form th:href="@{${URI}}">-->
+<!--<input type="button" value="Увійти в акаунт Spotify">-->
+<a class="btn" th:href="${spotifyURI}" target="_blank">Spotify login</a>
+<a class="btn" th:href="${youtubeURI}" target="_blank">Youtube login</a>
+<form th:action="@{/spotify/convert}" th:method="POST">
+    <input type="text" name="youtubeLink" value="Youtube link"/>
+    <input type="submit" value="Convert from youtube to spotify">
+</form>
+<form th:action="@{/youtube/convert}" th:method="POST">
+    <input type="text" name="spotifyLink" value="Spotify link"/>
+    <input type="submit" value="Convert from spotify to youtube">
+</form>
+<!--</form>-->
+</body>
+</html>
