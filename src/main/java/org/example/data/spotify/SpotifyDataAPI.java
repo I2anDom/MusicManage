@@ -37,6 +37,14 @@ public class SpotifyDataAPI {
         return SPOTIFY_API;
     }
 
+    public static SpotifyApi getUnauthSpotifyApi(){
+        return new SpotifyApi.Builder()
+                .setClientId(SpotifyConstants.CLIENT_ID)
+                .setClientSecret(SpotifyConstants.CLIENT_SECRET)
+                .setRedirectUri(SpotifyHttpManager.makeUri(SpotifyConstants.REDIRECT_URL))
+                .build();
+    }
+
     public static List<ItemToSearchDTO> getItemToSearchDTOFromLink(String link){
         try{
             String playlistId = link.split("playlist/")[1];

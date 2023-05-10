@@ -28,4 +28,9 @@ public class YoutubeAuthController {
         Converter.fromSpotifyToYoutube(spotifyLink);
         return "mainPage";
     }
+
+    @GetMapping("/imageToYoutube")
+    public String convert(Model model){
+        return "searchByPicture";
+    }
 }

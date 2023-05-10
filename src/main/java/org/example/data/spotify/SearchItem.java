@@ -68,4 +68,38 @@ public class SearchItem {
         return null;
     }
 
+    public static Track searchItem(ItemToSearchDTO item){
+        try{
+            AuthorizationCodeCredentials authorizationCodeCredentials = SpotifyAuthorization.getAuthorizationCodeCredentials();
+            SpotifyApi spotifyApi = SpotifyDataAPI.getSpotifyApi();
+//            Track track = new Track();
+                SearchTracksRequest searchTracksRequest = spotifyApi.searchTracks(item.getSongName())
+                        .limit(10)
+                        .build();
+                Paging<Track> trackPaging = searchTracksRequest.execute();
+                Track[] tracks = trackPaging.getItems();
+                SearchArtistsRequest searchArtistRequest = spotifyApi.searchArtists(item.getArtist())
+                        .limit(10)
+                        .build();
+                Paging<Artist> artistPaging = searchArtistRequest.execute();
+                Artist[] artists = artistPaging.getItems();
+                Track foundTrack = null;
+                for(Track track : tracks){
+                    ArtistSimplified[] artistSimplifieds = track.getArtists();
+                    for(Artist artist : artists){
+                        for(ArtistSimplified artistSimplified : artistSimplifieds){
+                            if(artist.getId().equals(artistSimplified.getId())){
+                                foundTrack = track;
+                                return foundTrack;
+                            }
+                        }
+                    }
+                }
+            return null;
+        } catch (Exception ex) {
+            System.out.println(ex.getCause());
+        }
+        return null;
+    }
+
 }

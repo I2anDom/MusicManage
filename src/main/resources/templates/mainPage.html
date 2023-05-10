@@ -17,6 +17,12 @@
     <input type="text" name="spotifyLink" value="Spotify link"/>
     <input type="submit" value="Convert from spotify to youtube">
 </form>
+<form th:action="@{/youtube/imageToYoutube}">
+    <input type="submit" value="Convert from picture to youtube">
+</form>
+<form th:action="@{/spotify/imageToSpotify}">
+    <input type="submit" value="Convert from picture to spotify">
+</form>
 <!--</form>-->
 </body>
 </html>

@@ -15,7 +15,7 @@ public class SearchItem {
             for(ItemToSearchDTO item : itemToSearchDTOList){
                 YouTube.Search.List search = youTube.search().list("id,snippet");
                 search.setKey(YoutubeConstants.API_KEY);
-                search.setQ(item.getSongName() + " " + item.getArtist());
+                search.setQ(item.getSongName() + " " + item.getArtist() == null ? "" : item.getArtist());
                 search.setType("video");
                 search.setMaxResults(1L);
                 searchResultList.addAll(search.execute().getItems());
