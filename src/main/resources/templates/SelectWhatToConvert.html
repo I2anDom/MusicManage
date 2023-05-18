@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playlist Converter</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      align-items: center;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+      color: #333;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 20px;
+      color: #333;
+    }
+
+    div {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      display: block;
+      margin-top: 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #555;
+    }
+
+  </style>
+</head>
+<body>
+<h1>Playlist Converter</h1>
+<p>Please select the conversion option:</p>
+
+  <div>
+    <form th:action="@{/youtube/link-form}">
+      <input type="submit" name="conversion" value="Spotify to Youtube">
+    </form>
+    <form th:action="@{/spotify/link-form}">
+      <input type="submit" name="conversion" value="Youtube to Spotify">
+    </form>
+    <form th:action="@{/youtube/imageToYoutube}">
+      <input type="submit" name="conversion" value="Screenshot to Youtube">
+    </form>
+    <form th:action="@{/spotify/imageToSpotify}">
+      <input type="submit" name="conversion" value="Screenshot to Spotify">
+    </form>
+  </div>
+
+<div th:if= "${spotifyUsername != null}">
+  <div th:text="'Logged in Spotify as ' + ${spotifyUsername}"></div>
+  <form th:action="@{/spotify/logout}">
+    <input type="submit" value="Logout">
+  </form>
+</div>
+<div th:if="${spotifyUsername == null}">
+  <a class="btn" th:href="${spotifyURI}" target="_self">Spotify login</a>
+</div>
+
+<div th:if= "${youtubeChanel != null}">
+  <div th:text="'Logged in Youtube as ' + ${youtubeChanel}"></div>
+  <form th:action="@{/youtube/logout}">
+    <input type="submit" value="Logout">
+  </form>
+</div>
+<div th:if= "${youtubeChanel == null}">
+  <a class="btn" th:href="${youtubeURI}" target="_self">Youtube login</a>
+</div>
+<div th:if="${isSpotifyAndYoutubeConnected == false}">
+  <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+<div th:if="${isSpotifyConnected == false}">
+  <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+<div th:if="${isYoutubeConnected == false}">
+  <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+</body>
+</html>

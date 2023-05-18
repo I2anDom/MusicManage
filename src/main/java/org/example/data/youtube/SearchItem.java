@@ -15,7 +15,14 @@ public class SearchItem {
             for(ItemToSearchDTO item : itemToSearchDTOList){
                 YouTube.Search.List search = youTube.search().list("id,snippet");
                 search.setKey(YoutubeConstants.API_KEY);
-                search.setQ(item.getSongName() + " " + item.getArtist() == null ? "" : item.getArtist());
+                if(item.getSongName() != null && item.getArtist() != null){
+                    search.setQ(item.getSongName() + " " + item.getArtist());
+                } else if(item.getSongName() != null){
+                    search.setQ(item.getArtist());
+                } else if(item.getArtist() != null){
+                    search.setQ(item.getArtist());
+                }
+//                search.setQ(item.getSongName() + " " + item.getArtist() == null ? "" : item.getArtist());
                 search.setType("video");
                 search.setMaxResults(1L);
                 searchResultList.addAll(search.execute().getItems());

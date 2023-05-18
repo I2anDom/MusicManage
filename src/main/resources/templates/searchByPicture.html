@@ -66,6 +66,24 @@
     output .span--hidden {
         visibility: hidden;
     }
+    .loader {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        border: 10px solid #f3f3f3;
+        border-top: 10px solid #3498db;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 
 <body>
@@ -78,12 +96,22 @@
     <button type="button" onclick="uploadFiles()">Submit</button>
 </form>
 
+<form th:action="@{/spotify/spotifyListEditor}" id="myForm">
+    <input type="button" hidden="hidden">
+</form>
+
 <output></output>
+
+<div class="loader"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     const inputDiv = document.querySelector(".input-div")
     const input = document.querySelector("input")
     const output = document.querySelector("output")
     let imagesArray = []
+    const loader = document.querySelector(".loader")
+
     input.addEventListener("change", () => {
         const files = input.files
         for (let i = 0; i < files.length; i++) {
@@ -120,23 +148,27 @@
         // const form = document.querySelector();
         const formData = new FormData();
 
-        console.log('SOMETHING');
-
         for (let i = 0; i < imagesArray.length; i++) {
             formData.append('images', imagesArray[i]);
         }
+
+        showLoader(); // показати анімацію завантаження
 
         fetch('/spotify/upload', {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
             .then(data => {
+                hideLoader(); // приховати анімацію завантаження
                 console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
+                window.location.href = '/spotify/spotifyListEditor'; // перенаправлення користувача
             });
+    }
+    function showLoader() {
+        loader.style.display = "block";
+    }
+    function hideLoader() {
+        loader.style.display = "none";
     }
 </script>
 </body>

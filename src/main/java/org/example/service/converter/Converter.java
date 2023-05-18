@@ -23,19 +23,40 @@ import java.util.stream.Collectors;
 
 
 public class Converter {
-    public static void fromYoutubeToSpotify(String link){
+    private static List<Track> lastConvertedSpotifyList;
+    private static List<SearchResult> lastConvertedYoutubeList;
+    public static List<Track> fromYoutubeToSpotify(String link){
         List<ItemToSearchDTO> itemsToSearch = YoutubeDataAPI.getItemToSearchDTOFromLink(link);
-        List<Track> trackList = SearchItem.searchItems(itemsToSearch);
-        CreatePlaylist.createPlaylist("testList-23958г39084192384", false, trackList);
+        lastConvertedSpotifyList = SearchItem.searchItems(itemsToSearch);
+        return lastConvertedSpotifyList;
+//        CreatePlaylist.createPlaylist("testList-23958г39084192384", false, trackList);
     }
-    public static void fromSpotifyToYoutube(String link){
+    public static List<SearchResult> fromSpotifyToYoutube(String link){
         List<ItemToSearchDTO> itemsToSearch = SpotifyDataAPI.getItemToSearchDTOFromLink(link);
-        List<SearchResult> searchResults = org.example.data.youtube.SearchItem.searchItems(itemsToSearch);
-        org.example.data.youtube.CreatePlaylist.createPlaylist("testList212345", false, searchResults);
+        lastConvertedYoutubeList = org.example.data.youtube.SearchItem.searchItems(itemsToSearch);
+        return lastConvertedYoutubeList;
+//        org.example.data.youtube.CreatePlaylist.createPlaylist("testList212345", false, searchResults);
     }
 
-    public static void fromScreenshotsToPlaylist(List<MultipartFile> multipartFileList) throws IOException {
+    public static List<Track> fromScreenshotsToSpotify(List<MultipartFile> multipartFileList) throws IOException {
         List<Root> roots = ImageConverter.makeRequest(multipartFileList);
         List<ItemToSearchDTO> itemToSearchDTOList = ImageConverter.getItemToSearchFromRoots(roots);
+        lastConvertedSpotifyList = SearchItem.searchItems(itemToSearchDTOList);
+        return lastConvertedSpotifyList;
+    }
+
+    public static List<SearchResult> fromScreenshotsToYoutube(List<MultipartFile> multipartFileList) throws IOException {
+        List<Root> roots = ImageConverter.makeRequest(multipartFileList);
+        List<ItemToSearchDTO> itemToSearchDTOList = ImageConverter.getItemToSearchFromRoots(roots);
+        lastConvertedYoutubeList = org.example.data.youtube.SearchItem.searchItems(itemToSearchDTOList);
+        return lastConvertedYoutubeList;
+    }
+
+    public static List<Track> getLastConvertedSpotifyListList(){
+        return lastConvertedSpotifyList;
+    }
+
+    public static List<SearchResult> getLastConvertedYoutubeList(){
+        return lastConvertedYoutubeList;
     }
 }

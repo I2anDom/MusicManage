@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <ol>
+        <li th:each="track, i : ${trackList}">
+            <img th:src="${track.album.images[2].url}" alt="Track Image" />
+            <span th:text="${track.name}" />
+            <span th:each="artist : ${track.artists}">
+                <span th:text="${artist.name}"></span>
+            </span>
+            <a th:href="${track.previewUrl}" target="_self">Listen</a>
+            <form th:action="@{/spotify/remove/{id}(id=${i.index})}" th:method="POST">
+                <button type="submit">Remove</button>
+            </form>
+        </li>
+    </ol>
+    <form th:action="@{/spotify/createPlaylist}" method="POST">
+        <label for="private">Private playlist</label>
+        <input type="checkbox" id="private" name="isPublic" value="Private" checked="checked"/>
+        <label>Enter playlist name:</label>
+        <input type="text" name="playlistName" value="My playlist">
+        <input type="submit" value="Create playlist"/>
+    </form>
+</div>
+</body>
+</html>

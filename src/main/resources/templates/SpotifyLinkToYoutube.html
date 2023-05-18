@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/youtube/convert-from-link}" th:method="POST">
+    <label for="spotifyLink">Spotify link</label>
+    <input type="text" id="spotifyLink" name="spotifyLink"/>
+    <input type="submit" value="Convert">
+</form>
+<!--<div th:if= "${spotifyUsername != null}">-->
+<!--    <div th:text="'Logged in Spotify as ' + ${spotifyUsername}"></div>-->
+<!--</div>-->
+<!--<div th:if="${spotifyUsername == null}">-->
+<!--    <a class="btn" th:href="${spotifyURI}" target="_self">Spotify login</a>-->
+<!--</div>-->
+
+<!--<div th:if= "${youtubeChanel != null}">-->
+<!--    <div th:text="'Logged in Youtube as ' + ${youtubeChanel}"></div>-->
+<!--</div>-->
+<!--<div th:if= "${youtubeChanel == null}">-->
+<!--    <a class="btn" th:href="${youtubeURI}" target="_self">Youtube login</a>-->
+<!--</div>-->
+
+</body>
+</html>

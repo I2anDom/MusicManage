@@ -46,4 +46,9 @@ public class SpotifyAuthorization {
     public static AuthorizationCodeCredentials getAuthorizationCodeCredentials(){
         return AUTHORIZATION_CODE_CREDENTIALS;
     }
+
+    public static void logout(){
+        AUTHORIZATION_CODE_CREDENTIALS = null;
+        SpotifyDataAPI.logout();
+    }
 }

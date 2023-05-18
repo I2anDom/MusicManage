@@ -5,8 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<!--<form th:href="@{${URI}}">-->
-<!--<input type="button" value="Увійти в акаунт Spotify">-->
 <a class="btn" th:href="${spotifyURI}" target="_blank">Spotify login</a>
 <a class="btn" th:href="${youtubeURI}" target="_blank">Youtube login</a>
 <form th:action="@{/spotify/convert}" th:method="POST">
@@ -15,7 +13,7 @@
 </form>
 <form th:action="@{/youtube/convert}" th:method="POST">
     <input type="text" name="spotifyLink" value="Spotify link"/>
-    <input type="submit" value="Convert from spotify to youtube">
+    <input  type="submit" value="Convert from spotify to youtube">
 </form>
 <form th:action="@{/youtube/imageToYoutube}">
     <input type="submit" value="Convert from picture to youtube">
@@ -23,6 +21,20 @@
 <form th:action="@{/spotify/imageToSpotify}">
     <input type="submit" value="Convert from picture to spotify">
 </form>
-<!--</form>-->
+<div th:if="${isSpotifyAndYoutubeConnected == false}">
+    <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+<div th:if="${isSpotifyConnected == false}">
+    <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+<div th:if="${isYoutubeConnected == false}">
+    <p th:text="${errorMessage}" style="color:red;"></p>
+</div>
+<form th:action="@{/spotify/logout}" th:method="POST">
+    <input type="submit" value="Logout from Spotify">
+</form>
+<form th:action="@{/youtube/logout}" th:method="POST">
+    <input type="submit" value="Logout from YouTube">
+</form>
 </body>
 </html>

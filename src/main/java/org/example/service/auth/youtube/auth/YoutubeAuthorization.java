@@ -15,6 +15,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.rpc.context.AttributeContext;
+import org.example.data.spotify.SpotifyDataAPI;
+import org.example.data.youtube.YoutubeDataAPI;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,5 +43,9 @@ public class YoutubeAuthorization {
                 .build()
                 .setAccessToken(response.getAccessToken())
                 .setRefreshToken(response.getRefreshToken());
+    }
+
+    public static void logout(){
+        YoutubeDataAPI.logout();
     }
 }

@@ -1,8 +1,11 @@
 package org.example.data.spotify;
 
+import org.apache.hc.core5.http.ParseException;
 import org.example.dto.ItemToSearchDTO;
+import org.example.service.auth.spotifyAuth.SpotifyAuthorization;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.SpotifyHttpManager;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import se.michaelthelin.spotify.model_objects.specification.Paging;
 import se.michaelthelin.spotify.model_objects.specification.Playlist;
@@ -10,6 +13,7 @@ import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistRequest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +39,10 @@ public class SpotifyDataAPI {
 
     public static SpotifyApi getSpotifyApi(){
         return SPOTIFY_API;
+    }
+
+    public static void logout(){
+        SPOTIFY_API = null;
     }
 
     public static SpotifyApi getUnauthSpotifyApi(){
@@ -64,5 +72,13 @@ public class SpotifyDataAPI {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public static String getDisplayNameOfCurrentAuthorizedUser() throws IOException, ParseException, SpotifyWebApiException {
+        AuthorizationCodeCredentials spotifyCredentials = SpotifyAuthorization.getAuthorizationCodeCredentials();
+        if(spotifyCredentials == null){
+            return null;
+        }
+        return SpotifyDataAPI.getSpotifyApi().getCurrentUsersProfile().build().execute().getDisplayName();
     }
 }

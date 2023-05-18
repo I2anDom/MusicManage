@@ -77,4 +77,20 @@ public class YoutubeDataAPI {
     public static YouTube getYoutubeForRequests(){
         return YOUTUBE;
     }
+
+    public static String getChanelNameOfCurrentAuthorizedUser() throws IOException {
+        if(getYoutubeForRequests() == null){
+            return null;
+        }
+        ChannelListResponse channelResponse = getYoutubeForRequests().channels()
+                .list("snippet")
+                .setMine(true)
+                .execute();
+
+        return channelResponse.getItems().get(0).getSnippet().getTitle();
+    }
+
+    public static void logout(){
+        YOUTUBE = null;
+    }
 }
