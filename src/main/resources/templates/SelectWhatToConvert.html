@@ -6,7 +6,6 @@
     body {
       background-color: #f0f0f0;
       font-family: Arial, sans-serif;
-      align-items: center;
     }
 
     h1 {
@@ -21,13 +20,13 @@
       color: #333;
     }
 
-    div {
+    .container {
       max-width: 500px;
       margin: 0 auto;
       padding: 30px;
       background-color: #fff;
       border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,.2);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     label {
@@ -49,11 +48,55 @@
       padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
-      transition: all .3s ease;
+      transition: all 0.3s ease;
     }
 
     input[type="submit"]:hover {
       background-color: #555;
+    }
+
+    .info-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .info-container p {
+      margin: 0;
+    }
+
+    .info-container form {
+      display: inline-block;
+    }
+
+    .logout-form {
+      display: inline-block;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-button {
+      display: inline-block;
+      background-color: #1db954;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #1aa34a;
     }
 
   </style>
@@ -62,48 +105,48 @@
 <h1>Playlist Converter</h1>
 <p>Please select the conversion option:</p>
 
-  <div>
-    <form th:action="@{/youtube/link-form}">
-      <input type="submit" name="conversion" value="Spotify to Youtube">
-    </form>
-    <form th:action="@{/spotify/link-form}">
-      <input type="submit" name="conversion" value="Youtube to Spotify">
-    </form>
-    <form th:action="@{/youtube/imageToYoutube}">
-      <input type="submit" name="conversion" value="Screenshot to Youtube">
-    </form>
-    <form th:action="@{/spotify/imageToSpotify}">
-      <input type="submit" name="conversion" value="Screenshot to Spotify">
-    </form>
-  </div>
+<div class="container">
+  <form th:action="@{/youtube/link-form}">
+    <input type="submit" name="conversion" value="Spotify to Youtube">
+  </form>
+  <form th:action="@{/spotify/link-form}">
+    <input type="submit" name="conversion" value="Youtube to Spotify">
+  </form>
+  <form th:action="@{/youtube/imageToYoutube}">
+    <input type="submit" name="conversion" value="Screenshot to Youtube">
+  </form>
+  <form th:action="@{/spotify/imageToSpotify}">
+    <input type="submit" name="conversion" value="Screenshot to Spotify">
+  </form>
+</div>
 
-<div th:if= "${spotifyUsername != null}">
-  <div th:text="'Logged in Spotify as ' + ${spotifyUsername}"></div>
-  <form th:action="@{/spotify/logout}">
+<div th:if="${spotifyUsername != null}" class="info-container">
+  <p th:text="'Logged in Spotify as ' + ${spotifyUsername}"></p>
+  <form th:action="@{/spotify/logout}" class="logout-form">
     <input type="submit" value="Logout">
   </form>
 </div>
-<div th:if="${spotifyUsername == null}">
-  <a class="btn" th:href="${spotifyURI}" target="_self">Spotify login</a>
+<div th:if="${spotifyUsername == null}" class="login-container">
+  <a class="login-button" th:href="${spotifyURI}" target="_self">Spotify login</a>
 </div>
 
-<div th:if= "${youtubeChanel != null}">
-  <div th:text="'Logged in Youtube as ' + ${youtubeChanel}"></div>
-  <form th:action="@{/youtube/logout}">
-    <input type="submit" value="Logout">
+<div th:if="${youtubeChannel != null}" class="info-container">
+  <p th:text="'Logged in Youtube as ' + ${youtubeChannel}"></p>
+  <form th:action="@{/youtube/logout}" class="logout-form">
+    <input type="submit" value="Logout" th:action="@{/youtube/logout}" class="logout-form">
   </form>
 </div>
-<div th:if= "${youtubeChanel == null}">
-  <a class="btn" th:href="${youtubeURI}" target="_self">Youtube login</a>
+<div th:if="${youtubeChannel == null}" class="login-container">
+  <a class="login-button" th:href="${youtubeURI}" target="_self">Youtube login</a>
 </div>
 <div th:if="${isSpotifyAndYoutubeConnected == false}">
-  <p th:text="${errorMessage}" style="color:red;"></p>
+  <p th:text="${errorMessage}" class="error-message"></p>
 </div>
 <div th:if="${isSpotifyConnected == false}">
-  <p th:text="${errorMessage}" style="color:red;"></p>
+  <p th:text="${errorMessage}" class="error-message"></p>
 </div>
 <div th:if="${isYoutubeConnected == false}">
-  <p th:text="${errorMessage}" style="color:red;"></p>
+  <p th:text="${errorMessage}" class="error-message"></p>
 </div>
 </body>
 </html>

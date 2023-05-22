@@ -3,12 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: hidden;
+    }
+
+    .navbar {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 20px;
+    }
+
+    .navbar .main-page-button {
+      display: inline-block;
+      padding: 8px 20px;
+      background-color: #333;
+      color: #fff;
+      font-size: larger;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .navbar .main-page-button:hover {
+      background-color: #555;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    form.convert-from-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    label {
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    input[type="text"] {
+      padding: 8px;
+      width: 300px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"].convert-from-link {
+      margin-top: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #555;
+    }
+
+    .loading-message {
+      margin-top: 10px;
+      color: #333;
+      font-size: 16px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<form th:action="@{/spotify/convert-from-link}" th:method="POST">
-  <label for="youtubeLink">Youtube link</label>
-  <input type="text" id="youtubeLink" name="youtubeLink"/>
-  <input type="submit" value="Convert"/>
-</form>
+<div class="navbar">
+  <form th:action="@{/mainPage}">
+    <input class="main-page-button" type="submit" value="Main Page">
+  </form>
+</div>
+<div class="content">
+  <form th:action="@{/spotify/convert-from-link}" th:method="POST" onsubmit="showLoadingMessage()" class="convert-from-link">
+    <label for="youtubeLink">Youtube link</label>
+    <input type="text" id="youtubeLink" name="youtubeLink"/>
+    <input type="submit" value="Convert" class="convert-from-link">
+  </form>
+  <div id="loadingMessage" class="loading-message" style="display: none;">Loading...</div>
+</div>
+<script>
+  function goToMainPage() {
+    // Replace the URL with your main page URL
+    window.location.href = "/";
+  }
+
+  function showLoadingMessage() {
+    document.getElementById('loadingMessage').style.display = 'block';
+  }
+</script>
 </body>
 </html>

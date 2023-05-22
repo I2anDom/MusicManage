@@ -3,25 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 20px;
+      font-size: 20px;
+    }
+
+    .navbar .main-page-button {
+      display: inline-block;
+      padding: 8px 20px;
+      background-color: #333;
+      color: #fff;
+      font-size: larger;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .navbar .main-page-button:hover {
+      background-color: #555;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    ol {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      height: 50px;
+      width: 50px;
+      margin-right: 10px;
+    }
+
+    a {
+      margin-left: 10px;
+      color: #3498db;
+      text-decoration: none;
+    }
+
+    form button {
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #217dbb;
+    }
+
+    form {
+      display: inline-block;
+    }
+
+    label {
+      margin-right: 10px;
+    }
+
+    .navbar .logout-form {
+      margin-left: 10px;
+    }
+
+    .error-message {
+      color: red;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .login-button {
+      display: inline-block;
+      background-color: #1db954;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #1aa34a;
+    }
+
+    /* Additional Styles */
+    #private-label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input[type="submit"] {
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #217dbb;
+    }
+
+    /* Custom Styles */
+    .playlist-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .playlist-form label,
+    .playlist-form input[type="text"] {
+      margin: 0;
+    }
+
+    .playlist-form input[type="submit"] {
+      margin-left: auto;
+    }
+  </style>
 </head>
 <body>
-<div>
+<div class="navbar">
+  <form th:action="@{/mainPage}">
+    <input class="main-page-button" type="submit" value="Main Page">
+  </form>
+</div>
+
+<div class="container">
   <ol>
     <li th:each="searchResult, i : ${searchResultList}">
       <img th:src="${searchResult.snippet.thumbnails.high.url}" alt="Video Preview" />
       <span th:text="${searchResult.snippet.title}" />
-      <a th:href="${'https://www.youtube.com/watch?v=' + searchResult.id.videoId}" target="_self">Listen</a>
-      <form th:action="@{/youtube/remove/{id}(id=${i.index})}" th:method="POST">
-        <button type="submit">Remove</button>
-      </form>
+      <div>
+        <a th:href="${'https://www.youtube.com/watch?v=' + searchResult.id.videoId}" target="_self">Listen</a>
+        <form th:action="@{/youtube/remove/{id}(id=${i.index})}" th:method="POST">
+          <button type="submit">Remove</button>
+        </form>
+      </div>
     </li>
   </ol>
-  <form th:action="@{/youtube/createPlaylist}" method="POST">
-    <label for="private">Private playlist</label>
-    <input type="checkbox" id="private" name="isPublic" value="Private" checked="checked"/>
-    <label>Enter playlist name:</label>
-    <input type="text" name="playlistName" value="My playlist">
-    <input type="submit" value="Create playlist"/>
+  <form th:action="@{/youtube/createPlaylist}" method="POST" class="playlist-form">
+    <p>
+      <label for="private">Private playlist</label>
+      <input type="checkbox" id="private" name="isPublic" value="Private" checked="checked"/>
+    </p>
+    <p>
+      <label>Enter playlist name:</label>
+      <input type="text" name="playlistName" value="My playlist">
+    </p>
+    <p>
+      <input type="submit" value="Create playlist"/>
+    </p>
   </form>
 </div>
 </body>

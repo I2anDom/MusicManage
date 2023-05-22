@@ -37,7 +37,7 @@ public class MainPageController {
         model.addAttribute("spotifyURI", spotifyURI.toString());
         model.addAttribute("youtubeURI", youtubeURI.toString());
         model.addAttribute("spotifyUsername", SpotifyDataAPI.getDisplayNameOfCurrentAuthorizedUser());
-        model.addAttribute("youtubeChanel", YoutubeDataAPI.getChanelNameOfCurrentAuthorizedUser());
+        model.addAttribute("youtubeChannel", YoutubeDataAPI.getChanelNameOfCurrentAuthorizedUser());
         return "SelectWhatToConvert";
     }
 
