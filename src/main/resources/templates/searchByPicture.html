@@ -221,13 +221,6 @@
         displayImages();
     }
 
-    input.addEventListener("change", () => {
-        const files = input.files
-        for (let i = 0; i < files.length; i++) {
-            imagesArray.push(files[i])
-        }
-        displayImages()
-    })
     inputDiv.addEventListener("drop", (e) => {
         e.preventDefault()
         const files = e.dataTransfer.files
